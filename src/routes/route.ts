@@ -1,8 +1,10 @@
 import express from "express";
 import { newGame, validateGame } from "../controllers/controller";
-import { handleMethodNotAllowed } from "../services/service" ;
+import { handleMethodNotAllowed } from "../services/service";
 
-export const defaultRoute = express.Router()
+const defaultRoute = express.Router();
 
-defaultRoute.route('/new').get(newGame).all(handleMethodNotAllowed)
-defaultRoute.route('/validate').post(validateGame).all(handleMethodNotAllowed)
+defaultRoute.route("/new").get(newGame).all(handleMethodNotAllowed);
+defaultRoute.route("/validate").post(validateGame).all(handleMethodNotAllowed);
+
+export { defaultRoute };

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../app';
+import { app } from '../app';
 
 describe('validateGame', () => {
   it('should return 200 with updated game state when input is valid', async () => {

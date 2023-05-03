@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es2018",
     "module": "CommonJS",
-    "strict": true,
+    "outDir": "dist",
+    "sourceMap": true,
+    "allowJs": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "sourceMap": true
+    "moduleResolution": "node",
+    "strict": true, 
   },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules", "./dist"]
+  "include": ["./src"],
+  "exclude": ["node_modules", ""]
 }

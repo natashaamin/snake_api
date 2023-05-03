@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
-const app_1 = __importDefault(require("./app"));
+const app_1 = require("/Users/natashaamin/Documents/snake/snake_api/src/app");
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
-app_1.default.listen(PORT, () => {
-    console.log(`Server running on port 3000`);
+app_1.app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 //# sourceMappingURL=server.js.map

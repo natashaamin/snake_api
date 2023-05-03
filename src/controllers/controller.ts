@@ -29,13 +29,30 @@ export const newGame = (req: Request, res: Response) => {
 };
 
 export const validateGame = (req: Request, res: Response) => {
-  console.log(req.body,"rachel")
   const { state, ticks } = req.body;
 
   // Check if request body contains all required fields
   const errorMessage = validateState(req.body);
   if (errorMessage) {
     return returnErrorResponse(res, errorMessage, 400);
+  }
+
+  // Check if the current movement is valid or not
+  // Get the last movement and the previous movement (if it exists) from the ticks array.
+  const lastTick = ticks[ticks.length - 1];
+  const lastVelX = lastTick.velX;
+  const lastVelY = lastTick.velY;
+  const prevVelX = ticks.length > 1 ? ticks[ticks.length - 2].velX : 0;
+  const prevVelY = ticks.length > 1 ? ticks[ticks.length - 2].velY : 0;
+
+  if (
+    (lastVelX === 1 && prevVelX === -1) ||
+    (lastVelX === -1 && prevVelX === 1) ||
+    (lastVelY === 1 && prevVelY === -1) ||
+    (lastVelY === -1 && prevVelY === 1)
+  ) {
+    returnErrorResponse(res, "Invalid move", 418);
+    return;
   }
 
   // Validate state and ticks
@@ -63,7 +80,7 @@ export const validateGame = (req: Request, res: Response) => {
     returnErrorResponse(res, "Game over: snake went out of bounds", 418);
     return;
   }
-  
+
   if (newSnakeX === state.fruit.x && newSnakeY === state.fruit.y) {
     isFound = true;
     gameState.snake.x = newSnakeX;

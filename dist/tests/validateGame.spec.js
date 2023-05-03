@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const app_1 = __importDefault(require("../app"));
+const app_1 = require("../app");
 describe('validateGame', () => {
     it('should return 200 with updated game state when input is valid', async () => {
         const gameState = {
@@ -47,7 +47,7 @@ describe('validateGame', () => {
                 }
             ]
         };
-        const response = await (0, supertest_1.default)(app_1.default)
+        const response = await (0, supertest_1.default)(app_1.app)
             .post('/validate')
             .send(gameState);
         expect(response.status).toBe(200);
@@ -67,7 +67,7 @@ describe('validateGame', () => {
             },
             ticks: [],
         };
-        const response = await (0, supertest_1.default)(app_1.default)
+        const response = await (0, supertest_1.default)(app_1.app)
             .post('/validate')
             .send(gameState);
         expect(response.status).toBe(400);
@@ -89,7 +89,7 @@ describe('validateGame', () => {
                 { velX: 1, velY: 0 },
             ],
         };
-        const response = await (0, supertest_1.default)(app_1.default)
+        const response = await (0, supertest_1.default)(app_1.app)
             .post('/validate')
             .send(gameState);
         expect(response.status).toBe(404);
@@ -107,7 +107,7 @@ describe('validateGame', () => {
             },
             ticks: [{ velX: 1, velY: 0 }],
         };
-        const response = await (0, supertest_1.default)(app_1.default)
+        const response = await (0, supertest_1.default)(app_1.app)
             .post('/validate')
             .send(gameState);
         expect(response.status).toBe(418);

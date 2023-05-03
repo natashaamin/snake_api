@@ -22,12 +22,25 @@ const newGame = (req, res) => {
 };
 exports.newGame = newGame;
 const validateGame = (req, res) => {
-    console.log(req.body, "rachel");
     const { state, ticks } = req.body;
     // Check if request body contains all required fields
     const errorMessage = (0, exports.validateState)(req.body);
     if (errorMessage) {
         return (0, service_1.returnErrorResponse)(res, errorMessage, 400);
+    }
+    // Check if the current movement is valid or not
+    // Get the last movement and the previous movement (if it exists) from the ticks array.
+    const lastTick = ticks[ticks.length - 1];
+    const lastVelX = lastTick.velX;
+    const lastVelY = lastTick.velY;
+    const prevVelX = ticks.length > 1 ? ticks[ticks.length - 2].velX : 0;
+    const prevVelY = ticks.length > 1 ? ticks[ticks.length - 2].velY : 0;
+    if ((lastVelX === 1 && prevVelX === -1) ||
+        (lastVelX === -1 && prevVelX === 1) ||
+        (lastVelY === 1 && prevVelY === -1) ||
+        (lastVelY === -1 && prevVelY === 1)) {
+        (0, service_1.returnErrorResponse)(res, "Invalid move", 418);
+        return;
     }
     // Validate state and ticks
     let gameState = state;
@@ -58,10 +71,14 @@ const validateGame = (req, res) => {
         gameState.score++;
         gameState.fruit = (0, service_1.generateNewFruitPosition)(gameState.width, gameState.height);
         // Generate new fruit position and increment score
-        gameState = Object.assign(Object.assign({}, gameState), { score: gameState.score + 1, fruit: {
+        gameState = {
+            ...gameState,
+            score: gameState.score + 1,
+            fruit: {
                 x: (0, service_1.randomInt)(0, gameState.width - 1),
                 y: (0, service_1.randomInt)(0, gameState.height - 1),
-            } });
+            },
+        };
     }
     else {
         (0, service_1.returnErrorResponse)(res, "Fruit not found - ticks do not lead the snake to the fruit position", 404);
