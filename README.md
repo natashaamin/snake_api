@@ -9,13 +9,19 @@ yarn
 ### Compile and Hot-Reload for Development
 
 ```sh
-yarn run dev
+yarn run start
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-yarn run build
+yarn run tsc
+```
+
+### Compile and Hot-Reload for Production
+
+```sh
+yarn run start:prod
 ```
 
 ### Run Unit Tests
